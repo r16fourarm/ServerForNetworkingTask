@@ -3,11 +3,13 @@ package serverjrk;
 import java.io.*;
 import java.net.*;
 import java.util.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JTextArea;
 
 public class guiserver extends javax.swing.JFrame {
     Serverjrk svr = new Serverjrk();
-
+     
 
     public JTextArea getTa_chat() {
         return ta_chat;
@@ -15,7 +17,14 @@ public class guiserver extends javax.swing.JFrame {
     
 
     public guiserver() {
+        
         initComponents();
+        try {
+           servergame sgm =  new servergame();
+           sgm.start();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
     }
 
     @SuppressWarnings("unchecked")
@@ -137,8 +146,10 @@ public class guiserver extends javax.swing.JFrame {
     }//GEN-LAST:event_b_endActionPerformed
 
     private void b_startActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b_startActionPerformed
+       /* */
         Thread starter = new Thread(new ServerStart(this,svr));
         starter.start();
+       
 
         ta_chat.append("Server started...\n");
     }//GEN-LAST:event_b_startActionPerformed
@@ -166,7 +177,9 @@ public class guiserver extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
             @Override
             public void run() {
+                
                 new guiserver().setVisible(true);
+                
             }
         });
     }
